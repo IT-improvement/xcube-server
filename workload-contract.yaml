@@ -1,0 +1,11 @@
+service: official-xcube-server
+port: 8080
+database: null
+healthPath: /
+command:
+  - xcube
+  - serve
+  - -v
+  - -c
+  - /etc/xcube/config.yml
+status: local-command-verified
