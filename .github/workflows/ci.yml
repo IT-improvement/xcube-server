@@ -1,0 +1,27 @@
+# CI (DEPJ1): config renderer tests on GitHub-hosted runners for pushes to dev/version1 and pull requests. No secrets.
+name: ci
+
+on:
+  push:
+    branches: [dev, version1]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Config renderer tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: unittest
+        run: python -m unittest discover -s tests -v
